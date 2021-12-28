@@ -43,7 +43,7 @@ async def load(context, url):
                 def noop(url):
                     return url
 
-                return await http_loader.load(context, generated_url, normalize_url_func=noop)
+                return http_loader.load(context, generated_url, normalize_url_func=noop)
 
             await _generate_presigned_url(context, bucket, key, on_url_generated)
         else:
