@@ -34,8 +34,7 @@ class Bucket(object):
         :return: The created bucket
         """
         self._bucket = bucket
-
-        session = aiobotocore.get_session()
+        self._session = aiobotocore.get_session()
 
         config = None
         if max_retry is not None:
@@ -45,12 +44,15 @@ class Bucket(object):
                 )
             )
 
-        self._client = session.create_client(
+        self._client = self._session.create_client(
             's3',
             region_name=region,
             endpoint_url=endpoint,
             config=config
         )
+
+    def close_session(self):
+        self._session.close()
 
     async def get(self, path):
         """

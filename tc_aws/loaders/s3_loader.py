@@ -61,6 +61,8 @@ async def load(context, url):
 
         result.error = LoaderResult.ERROR_UPSTREAM
         return result
+    finally:
+        loader.close_session()
 
     result.successful = True
     result.buffer = await file_key['Body'].read()
