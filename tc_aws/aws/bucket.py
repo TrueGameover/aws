@@ -25,6 +25,7 @@ class Bucket(object):
     """
     This handles all communication with AWS API
     """
+
     def __init__(self, bucket, region, endpoint, max_retry=None):
         """
         Constructor
@@ -51,8 +52,8 @@ class Bucket(object):
             config=config
         )
 
-    def close_session(self):
-        self._session.close()
+    async def close_session(self):
+        await self._session.close()
         del self._session
 
     async def get(self, path):
