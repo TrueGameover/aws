@@ -53,6 +53,7 @@ class Bucket(object):
 
     def close_session(self):
         self._session.close()
+        del self._session
 
     async def get(self, path):
         """
