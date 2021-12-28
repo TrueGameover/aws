@@ -9,8 +9,10 @@ import thumbor.loaders.http_loader as http_loader
 from . import *
 from ..aws.bucket import Bucket
 
+
 def validate(context, url, normalize_url_func=http_loader._normalize_url):
     return _validate(context, url, normalize_url_func)
+
 
 async def _generate_presigned_url(context, bucket, key):
     """
@@ -22,6 +24,7 @@ async def _generate_presigned_url(context, bucket, key):
     """
     return await Bucket(bucket, context.config.get('TC_AWS_REGION'),
                         context.config.get('TC_AWS_ENDPOINT')).get_url(key)
+
 
 async def load(context, url):
     """
@@ -39,6 +42,7 @@ async def load(context, url):
             def on_url_generated(generated_url):
                 def noop(url):
                     return url
+
                 return await http_loader.load(context, generated_url, normalize_url_func=noop)
 
             await _generate_presigned_url(context, bucket, key, on_url_generated)
