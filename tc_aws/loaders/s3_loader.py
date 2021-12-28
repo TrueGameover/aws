@@ -39,7 +39,18 @@ async def load(context, url):
     result = LoaderResult()
 
     try:
-        file_key = await loader.get(key)
+        # file_key = await loader.get(key)
+
+        return await loader.get_url(key)
+
+        # result.successful = True
+        # result.buffer = await file_key['Body'].read()
+
+        # result.metadata.update(
+        #     size=file_key['ContentLength'],
+        #     updated_at=file_key['LastModified'],
+        # )
+
     except ClientError as err:
         logger.error(
             "ERROR retrieving image from S3 {0}: {1}".
@@ -64,15 +75,7 @@ async def load(context, url):
     finally:
         await loader.close_session()
 
-    result.successful = True
-    result.buffer = await file_key['Body'].read()
-
-    result.metadata.update(
-        size=file_key['ContentLength'],
-        updated_at=file_key['LastModified'],
-    )
-
-    return result
+    # return result
 
 
 def _get_bucket_and_key(context, url):
