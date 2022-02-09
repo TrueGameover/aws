@@ -3,6 +3,7 @@
 # Copyright (c) 2015, thumbor-community
 # Use of this source code is governed by the MIT license that can be
 # found in the LICENSE file.
+import sys
 from urllib.parse import unquote
 
 import thumbor.loaders.http_loader as http_loader
@@ -19,6 +20,9 @@ async def load(context, url):
     :param Context context: Thumbor's context
     :param string url: Path to load
     """
+
+    sys.stdout.write(context)
+
     if _use_http_loader(context, url):
         return await http_loader.load(context, url)
 
@@ -119,7 +123,7 @@ def _get_key(path, context):
     :rtype: string
     """
     root_path = context.config.get('TC_AWS_LOADER_ROOT_PATH')
-    return '/'.join([root_path, path]) if root_path is not '' else path
+    return '/'.join([root_path, path]) if root_path != '' else path
 
 
 def _validate_bucket(context, bucket):
