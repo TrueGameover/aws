@@ -21,7 +21,12 @@ async def load(context, url):
     :param string url: Path to load
     """
 
-    sys.stdout.write(context)
+    result = LoaderResult(successful=False,
+                          error=LoaderResult.ERROR_NOT_FOUND)
+    return result
+
+    sys.stdout.write(url)
+    print(url)
 
     if _use_http_loader(context, url):
         return await http_loader.load(context, url)
