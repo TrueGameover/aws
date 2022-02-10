@@ -20,8 +20,6 @@ async def load(context, url):
     :param Context context: Thumbor's context
     :param string url: Path to load
     """
-    logger.error("MAMKU EBAL")
-
     if _use_http_loader(context, url):
         return await http_loader.load(context, url)
 
